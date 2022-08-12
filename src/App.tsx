@@ -1,8 +1,11 @@
-import MainComponent from "./root/main";
+import React from "react";
+import { MainComponent } from "./root/main";
 
-function App() {
+function App(): JSX.Element {
   return (
-    <MainComponent />
+    <React.Fragment>
+      {MainComponent()}
+    </React.Fragment>
   );
 }
 
