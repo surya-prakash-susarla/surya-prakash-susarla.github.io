@@ -1,4 +1,5 @@
 import './main.css';
+import 'animate.css';
 import { Button, Layout, Menu, PageHeader, Typography } from 'antd';
 import React, { useState } from 'react';
 import Card from 'antd/lib/card/Card';
@@ -42,17 +43,30 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
   const [collapsed, setCollapsed] = useState(false);
   let toggleCollapsed = (): void => { setCollapsed(!collapsed) };
   let menu: JSX.Element = (
-    <Menu defaultSelectedKeys={['1']} mode={'inline'} inlineCollapsed={true}>
-      <Menu.Item key={'1'} onClick={() => { props.clickHandler(PageSelection.AboutMePage) }}> About Me </Menu.Item>
-      <Menu.Item key={'2'} onClick={() => { props.clickHandler(PageSelection.ResumePage) }}> Resume </Menu.Item>
-      <Menu.Item key={'3'} onClick={() => { props.clickHandler(PageSelection.ContactMePage) }}> Contact </Menu.Item>
+    <Menu defaultSelectedKeys={['1']} mode={'inline'} inlineCollapsed={true} className={'animate__animated animate__fadeInDown'}>
+      <Menu.Item key={'1'} onClick={() => { props.clickHandler(PageSelection.AboutMePage) }}>
+        About Me
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key={'2'} onClick={() => { props.clickHandler(PageSelection.ResumePage) }}>
+        Resume
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key={'3'} onClick={() => { props.clickHandler(PageSelection.ContactMePage) }}>
+        Contact
+      </Menu.Item>
     </Menu>
   );
   return (
-    <Sider collapsed={collapsed} breakpoint={'xs'} onBreakpoint={toggleCollapsed}>
-      <Button type='primary' onClick={toggleCollapsed}>
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
+    <Sider
+      collapsed={collapsed}
+      breakpoint={'xl'}
+      onBreakpoint={toggleCollapsed}>
+      <Button
+        type='dashed'
+        onClick={toggleCollapsed}
+        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        className={'sidebar-button'} />
       {
         collapsed ? null : menu
       }
@@ -62,7 +76,7 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
 
 const TitleBar: React.FC = () => {
   return (
-    <PageHeader className='header-text'>
+    <PageHeader className='header-text animate__animated animate__fadeInUp'>
       <Typography.Title code={true} level={1} >
         Surya Prakash Susarla
       </Typography.Title>
