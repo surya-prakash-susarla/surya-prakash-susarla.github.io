@@ -1,1 +1,13 @@
 @import '~antd/dist/antd.css';
+
+.header-text {
+  text-align: center;
+}
+
+.content-card-title {
+  text-align: left;
+}
+
+.footer-bar {
+  text-align: center;
+}
