@@ -1,7 +1,8 @@
 import './main.css';
-import { Layout, Menu, PageHeader, Typography } from 'antd';
+import { Button, Layout, Menu, PageHeader, Typography } from 'antd';
 import React, { useState } from 'react';
 import Card from 'antd/lib/card/Card';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 const { Footer, Sider } = Layout;
 
 enum PageSelection {
@@ -10,13 +11,24 @@ enum PageSelection {
   ContactMePage = 3
 };
 
+interface ContentCardProps {
+  title: string,
+  content: string
+};
+
+interface SideMenuProps {
+  clickHandler: (pageSelection: PageSelection) => void
+};
+
+interface ContentPageProps {
+  pageSelection: PageSelection
+};
+
 const MainComponent: React.FC = () => {
   const [pageSelection, setPageSelection] = useState(PageSelection.AboutMePage);
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider>
-        <SideMenu clickHandler={setPageSelection}/>
-      </Sider>
+      <SideMenu clickHandler={setPageSelection} />
       <Layout style={{ minHeight: '100vh' }}>
         <TitleBar />
         <ContentPage pageSelection={pageSelection} />
@@ -26,17 +38,25 @@ const MainComponent: React.FC = () => {
   );
 }
 
-interface SideMenuProps {
-  clickHandler: (pageSelection: PageSelection) => void
-};
-
 const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
-  return (
-    <Menu defaultSelectedKeys={['1']}>
+  const [collapsed, setCollapsed] = useState(false);
+  let toggleCollapsed = (): void => { setCollapsed(!collapsed) };
+  let menu: JSX.Element = (
+    <Menu defaultSelectedKeys={['1']} mode={'inline'} inlineCollapsed={true}>
       <Menu.Item key={'1'} onClick={() => { props.clickHandler(PageSelection.AboutMePage) }}> About Me </Menu.Item>
       <Menu.Item key={'2'} onClick={() => { props.clickHandler(PageSelection.ResumePage) }}> Resume </Menu.Item>
       <Menu.Item key={'3'} onClick={() => { props.clickHandler(PageSelection.ContactMePage) }}> Contact </Menu.Item>
     </Menu>
+  );
+  return (
+    <Sider collapsed={collapsed} breakpoint={'xs'} onBreakpoint={toggleCollapsed}>
+      <Button type='primary' onClick={toggleCollapsed}>
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Button>
+      {
+        collapsed ? null : menu
+      }
+    </Sider>
   );
 }
 
@@ -50,10 +70,6 @@ const TitleBar: React.FC = () => {
   )
 }
 
-interface ContentPageProps {
-  pageSelection: PageSelection
-};
-
 const ContentPage: React.FC<ContentPageProps> = (props: ContentPageProps) => {
   switch (props.pageSelection) {
     case PageSelection.AboutMePage:
@@ -66,11 +82,6 @@ const ContentPage: React.FC<ContentPageProps> = (props: ContentPageProps) => {
       return null;
   }
 }
-
-interface ContentCardProps {
-  title: string,
-  content: string
-};
 
 const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   return (

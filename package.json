@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@microsoft/fast-components": "^2.30.6",
     "@microsoft/fast-element": "^1.10.4",
     "@microsoft/fast-foundation": "^2.46.11",
