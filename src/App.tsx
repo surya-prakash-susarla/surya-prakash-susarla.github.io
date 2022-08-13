@@ -1,12 +1,7 @@
-import React from "react";
-import { MainComponent } from "./root/main";
+import MainComponent from "./root/main";
 
-function App(): JSX.Element {
-  return (
-    <React.Fragment>
-      {MainComponent()}
-    </React.Fragment>
-  );
+const App: React.FC = () => {
+  return <MainComponent />
 }
 
 export default App;

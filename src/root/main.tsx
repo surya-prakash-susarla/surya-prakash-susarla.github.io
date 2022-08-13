@@ -1,37 +1,70 @@
-import React, { useState } from "react";
-import { Button, Layout, Menu } from "antd";
 import './main.css';
-import Sider from "antd/lib/layout/Sider";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
-import { Content } from "antd/lib/layout/layout";
+import { Layout, Menu, PageHeader, Typography } from 'antd';
+import React from 'react';
+import Card from 'antd/lib/card/Card';
+const { Footer, Sider } = Layout;
 
-export function MainComponent(): JSX.Element {
-  const [collapsed, setCollapsed] = useState(false);
+const MainComponent: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="logo" />
-        <Menu mode="inline" items={getMenuItems()} theme="dark" defaultSelectedKeys={['1']} />
+      <Sider>
+        <SideMenu />
       </Sider>
-      <div> this is some other text </div>
-      <Content>
-        <Button> this is a random button</Button>
-      </Content>
+      <Layout style={{ minHeight: '100vh' }}>
+        <TitleBar />
+        <ContentPage />
+        <FooterBar />
+      </Layout>
     </Layout>
   );
 }
 
-function getMenuItems(): ItemType[] {
-  return [
-    createMenuItem('About Me', '1'),
-    createMenuItem('Resume', '2'),
-    createMenuItem('Contact', '3')
-  ]
+const SideMenu: React.FC = () => {
+  return (
+    <Menu defaultSelectedKeys={['1']}>
+      <Menu.Item key={'1'}> About Me </Menu.Item>
+      <Menu.Item key={'2'}> Resume </Menu.Item>
+      <Menu.Item key={'3'}> Contact </Menu.Item>
+    </Menu>
+  );
 }
 
-function createMenuItem(label: string, key: string): ItemType {
-  return {
-    label: label,
-    key: key
-  }
+const TitleBar: React.FC = () => {
+  return (
+    <PageHeader>
+      <Typography.Title code={true} level={1} underline={true} >
+        Surya Prakash Susarla
+      </Typography.Title>
+    </PageHeader>
+  )
 }
+
+const ContentPage: React.FC = () => {
+  return (
+    <Card>
+      This is some random card.
+    </Card>
+  );
+}
+
+const FooterBar: React.FC = () => {
+  const [time, setTime] = React.useState('');
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleString());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <Footer>
+      {time}
+    </Footer>
+  );
+}
+
+export default MainComponent;
