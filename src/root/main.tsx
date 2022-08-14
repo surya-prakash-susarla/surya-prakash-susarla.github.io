@@ -4,6 +4,7 @@ import { Button, Layout, Menu, PageHeader, Switch, Typography } from 'antd';
 import React, { useState } from 'react';
 import Card from 'antd/lib/card/Card';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { kAboutMeSection } from './contents';
 const { Footer, Sider } = Layout;
 
 enum PageSelection {
@@ -12,40 +13,32 @@ enum PageSelection {
   ContactMePage = 3
 };
 
-interface ThemeInfo {
-  isLightTheme: boolean,
-  toggleTheme: (isLightTheme: boolean) => void
-}
+interface BaseInfo { }
 
-interface ContentCardProps extends ThemeInfo {
+interface ContentCardProps extends BaseInfo {
   title: string,
   content: string
 };
 
-interface SideMenuProps extends ThemeInfo {
+interface SideMenuProps extends BaseInfo {
   clickHandler: (pageSelection: PageSelection) => void
 };
 
-interface ContentPageProps extends ThemeInfo {
+interface ContentPageProps extends BaseInfo {
   pageSelection: PageSelection
 };
 
-interface FooterBarProps extends ThemeInfo { };
+interface FooterBarProps extends BaseInfo { };
 
 const MainComponent: React.FC = () => {
   const [pageSelection, setPageSelection] = useState(PageSelection.AboutMePage);
-  const [lightThemeSelected, setLightThemeSelection] = useState(true);
-  let theme_props: ThemeInfo = {
-    isLightTheme: lightThemeSelected,
-    toggleTheme: setLightThemeSelection
-  };
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <SideMenu clickHandler={setPageSelection} {...theme_props} />
-      <Layout className={lightThemeSelected ? 'light-background' : 'dark-background'} style={{ minHeight: '100vh' }}>
-        <TitleBar {...theme_props} />
-        <ContentPage pageSelection={pageSelection} {...theme_props} />
-        <FooterBar {...theme_props} />
+      <SideMenu clickHandler={setPageSelection} />
+      <Layout style={{ minHeight: '100vh' }}>
+        <TitleBar />
+        <ContentPage pageSelection={pageSelection} />
+        <FooterBar />
       </Layout>
     </Layout>
   );
@@ -56,7 +49,7 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
   let toggleCollapsed = (): void => { setCollapsed(!collapsed) };
   let menu: JSX.Element = (
     <Menu defaultSelectedKeys={['1']} mode={'inline'} inlineCollapsed={true}
-      theme={props.isLightTheme ? 'light' : 'dark'} className={'animate__animated animate__fadeInDown'}>
+       className={'animate__animated animate__fadeInDown'}>
       <Menu.Item key={'1'} onClick={() => { props.clickHandler(PageSelection.AboutMePage) }}>
         About Me
       </Menu.Item>
@@ -74,8 +67,6 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
     <Sider
       collapsed={collapsed}
       breakpoint={'xl'}
-      theme={props.isLightTheme ? 'light' : 'dark'}
-      className={props.isLightTheme ? 'sider-light-background' : 'sider-dark-background'}
       onBreakpoint={toggleCollapsed}>
       <Button
         type={'primary'}
@@ -89,9 +80,9 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
   );
 }
 
-const TitleBar: React.FC<ThemeInfo> = (props: ThemeInfo) => {
+const TitleBar: React.FC<BaseInfo> = (props: BaseInfo) => {
   return (
-    <PageHeader className={'header-text animate__animated animate__fadeInUp ' + props.isLightTheme ? 'light-background-text-color' : 'dark-background-text-color'} ghost={true}>
+    <PageHeader className={'header-text animate__animated animate__fadeInUp'} ghost={true}>
       <Typography.Title code={true} level={1} >
         Surya Prakash Susarla
       </Typography.Title>
@@ -102,7 +93,7 @@ const TitleBar: React.FC<ThemeInfo> = (props: ThemeInfo) => {
 const ContentPage: React.FC<ContentPageProps> = (props: ContentPageProps) => {
   switch (props.pageSelection) {
     case PageSelection.AboutMePage:
-      return <ContentCard title='About Me' content='This is about me.' {...props} />
+      return <ContentCard title='About Me' content={kAboutMeSection} {...props} />
     case PageSelection.ResumePage:
       return <ContentCard title='Resume' content='Resume page.' {...props} />
     case PageSelection.ContactMePage:
@@ -140,13 +131,7 @@ const FooterBar: React.FC<FooterBarProps> = (props: FooterBarProps) => {
 
   return (
     <Footer className='footer-bar'>
-      <span className='clock-grid'> {time} </span>
-      <div className='theme-grid'>
-        <Switch
-          checkedChildren={'Light'} unCheckedChildren={'Dark'}
-          defaultChecked={true}
-          onChange={() => { props.toggleTheme(!props.isLightTheme) }} />
-      </div>
+      {time}
     </Footer>
   );
 }

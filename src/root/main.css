@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
 
 .header-text {
-  text-align: center;
+  text-align: left;
 }
 
 .content-card-title {
@@ -13,42 +13,5 @@
 }
 
 .footer-bar {
-  display: grid;
-  grid-template-areas: 
-    'clock theme';
-}
-
-.clock-grid {
-  grid-area: clock;
-  text-align: start;
-}
-
-.theme-grid {
-  grid-area: theme;
-  text-align: end;
-}
-
-.light-background {
-  background: #f0f2f5
-}
-
-.dark-background {
-  /* background: #3F3F3F; */
-  background: #181818;
-}
-
-.sider-dark-background {
-  background: #3f3f3f;
-}
-
-.sider-light-background {
-  background: gray
-}
-
-.dark-background-text-color {
-  color: white;
-}
-
-.light-background-text-color {
-  color: black;
+  text-align: center;
 }
