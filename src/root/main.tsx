@@ -35,13 +35,17 @@ interface FooterBarProps extends ThemeInfo { };
 const MainComponent: React.FC = () => {
   const [pageSelection, setPageSelection] = useState(PageSelection.AboutMePage);
   const [lightThemeSelected, setLightThemeSelection] = useState(true);
+  let theme_props: ThemeInfo = {
+    isLightTheme: lightThemeSelected,
+    toggleTheme: setLightThemeSelection
+  };
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <SideMenu clickHandler={setPageSelection} isLightTheme={lightThemeSelected} toggleTheme={setLightThemeSelection} />
-      <Layout className={lightThemeSelected? 'light-background': 'dark-background'} style={{ minHeight: '100vh' }}>
-        <TitleBar />
-        <ContentPage pageSelection={pageSelection} toggleTheme={setLightThemeSelection} isLightTheme={lightThemeSelected} />
-        <FooterBar toggleTheme={setLightThemeSelection} isLightTheme={lightThemeSelected} />
+      <SideMenu clickHandler={setPageSelection} {...theme_props} />
+      <Layout className={lightThemeSelected ? 'light-background' : 'dark-background'} style={{ minHeight: '100vh' }}>
+        <TitleBar {...theme_props} />
+        <ContentPage pageSelection={pageSelection} {...theme_props} />
+        <FooterBar {...theme_props} />
       </Layout>
     </Layout>
   );
@@ -71,6 +75,7 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
       collapsed={collapsed}
       breakpoint={'xl'}
       theme={props.isLightTheme ? 'light' : 'dark'}
+      className={props.isLightTheme ? 'sider-light-background' : 'sider-dark-background'}
       onBreakpoint={toggleCollapsed}>
       <Button
         type={'primary'}
@@ -84,9 +89,9 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
   );
 }
 
-const TitleBar: React.FC = () => {
+const TitleBar: React.FC<ThemeInfo> = (props: ThemeInfo) => {
   return (
-    <PageHeader className='header-text animate__animated animate__fadeInUp' ghost={true}>
+    <PageHeader className={'header-text animate__animated animate__fadeInUp ' + props.isLightTheme ? 'light-background-text-color' : 'dark-background-text-color'} ghost={true}>
       <Typography.Title code={true} level={1} >
         Surya Prakash Susarla
       </Typography.Title>

@@ -33,5 +33,22 @@
 }
 
 .dark-background {
-  background: #3F3F3F;
+  /* background: #3F3F3F; */
+  background: #181818;
+}
+
+.sider-dark-background {
+  background: #3f3f3f;
+}
+
+.sider-light-background {
+  background: gray
+}
+
+.dark-background-text-color {
+  color: white;
+}
+
+.light-background-text-color {
+  color: black;
 }
