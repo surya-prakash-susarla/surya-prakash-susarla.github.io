@@ -8,10 +8,30 @@
   text-align: left;
 }
 
-.footer-bar {
-  text-align: center;
-}
-
 .sidebar-button {
   width: 100%;
+}
+
+.footer-bar {
+  display: grid;
+  grid-template-areas: 
+    'clock theme';
+}
+
+.clock-grid {
+  grid-area: clock;
+  text-align: start;
+}
+
+.theme-grid {
+  grid-area: theme;
+  text-align: end;
+}
+
+.light-background {
+  background: #f0f2f5
+}
+
+.dark-background {
+  background: #3F3F3F;
 }

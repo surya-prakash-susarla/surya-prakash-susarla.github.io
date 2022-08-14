@@ -1,6 +1,6 @@
 import './main.css';
 import 'animate.css';
-import { Button, Layout, Menu, PageHeader, Typography } from 'antd';
+import { Button, Layout, Menu, PageHeader, Switch, Typography } from 'antd';
 import React, { useState } from 'react';
 import Card from 'antd/lib/card/Card';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
@@ -12,28 +12,36 @@ enum PageSelection {
   ContactMePage = 3
 };
 
-interface ContentCardProps {
+interface ThemeInfo {
+  isLightTheme: boolean,
+  toggleTheme: (isLightTheme: boolean) => void
+}
+
+interface ContentCardProps extends ThemeInfo {
   title: string,
   content: string
 };
 
-interface SideMenuProps {
+interface SideMenuProps extends ThemeInfo {
   clickHandler: (pageSelection: PageSelection) => void
 };
 
-interface ContentPageProps {
+interface ContentPageProps extends ThemeInfo {
   pageSelection: PageSelection
 };
 
+interface FooterBarProps extends ThemeInfo { };
+
 const MainComponent: React.FC = () => {
   const [pageSelection, setPageSelection] = useState(PageSelection.AboutMePage);
+  const [lightThemeSelected, setLightThemeSelection] = useState(true);
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <SideMenu clickHandler={setPageSelection} />
-      <Layout style={{ minHeight: '100vh' }}>
+      <SideMenu clickHandler={setPageSelection} isLightTheme={lightThemeSelected} toggleTheme={setLightThemeSelection} />
+      <Layout className={lightThemeSelected? 'light-background': 'dark-background'} style={{ minHeight: '100vh' }}>
         <TitleBar />
-        <ContentPage pageSelection={pageSelection} />
-        <FooterBar />
+        <ContentPage pageSelection={pageSelection} toggleTheme={setLightThemeSelection} isLightTheme={lightThemeSelected} />
+        <FooterBar toggleTheme={setLightThemeSelection} isLightTheme={lightThemeSelected} />
       </Layout>
     </Layout>
   );
@@ -43,7 +51,8 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
   const [collapsed, setCollapsed] = useState(false);
   let toggleCollapsed = (): void => { setCollapsed(!collapsed) };
   let menu: JSX.Element = (
-    <Menu defaultSelectedKeys={['1']} mode={'inline'} inlineCollapsed={true} className={'animate__animated animate__fadeInDown'}>
+    <Menu defaultSelectedKeys={['1']} mode={'inline'} inlineCollapsed={true}
+      theme={props.isLightTheme ? 'light' : 'dark'} className={'animate__animated animate__fadeInDown'}>
       <Menu.Item key={'1'} onClick={() => { props.clickHandler(PageSelection.AboutMePage) }}>
         About Me
       </Menu.Item>
@@ -61,9 +70,10 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
     <Sider
       collapsed={collapsed}
       breakpoint={'xl'}
+      theme={props.isLightTheme ? 'light' : 'dark'}
       onBreakpoint={toggleCollapsed}>
       <Button
-        type='dashed'
+        type={'primary'}
         onClick={toggleCollapsed}
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         className={'sidebar-button'} />
@@ -76,7 +86,7 @@ const SideMenu: React.FC<SideMenuProps> = (props: SideMenuProps) => {
 
 const TitleBar: React.FC = () => {
   return (
-    <PageHeader className='header-text animate__animated animate__fadeInUp'>
+    <PageHeader className='header-text animate__animated animate__fadeInUp' ghost={true}>
       <Typography.Title code={true} level={1} >
         Surya Prakash Susarla
       </Typography.Title>
@@ -87,11 +97,11 @@ const TitleBar: React.FC = () => {
 const ContentPage: React.FC<ContentPageProps> = (props: ContentPageProps) => {
   switch (props.pageSelection) {
     case PageSelection.AboutMePage:
-      return <ContentCard title='About Me' content='This is about me.' />
+      return <ContentCard title='About Me' content='This is about me.' {...props} />
     case PageSelection.ResumePage:
-      return <ContentCard title='Resume' content='Resume page.' />
+      return <ContentCard title='Resume' content='Resume page.' {...props} />
     case PageSelection.ContactMePage:
-      return <ContentCard title='Contact Me' content='Contact me page.' />
+      return <ContentCard title='Contact Me' content='Contact me page.' {...props} />
     default:
       return null;
   }
@@ -99,7 +109,7 @@ const ContentPage: React.FC<ContentPageProps> = (props: ContentPageProps) => {
 
 const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   return (
-    <Card>
+    <Card className=''>
       <Typography.Title code={true} underline={true} level={2} className='content-card-title'>
         {props.title}
       </Typography.Title>
@@ -110,7 +120,7 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   );
 }
 
-const FooterBar: React.FC = () => {
+const FooterBar: React.FC<FooterBarProps> = (props: FooterBarProps) => {
   const [time, setTime] = React.useState('');
 
   React.useEffect(() => {
@@ -125,7 +135,13 @@ const FooterBar: React.FC = () => {
 
   return (
     <Footer className='footer-bar'>
-      {time}
+      <span className='clock-grid'> {time} </span>
+      <div className='theme-grid'>
+        <Switch
+          checkedChildren={'Light'} unCheckedChildren={'Dark'}
+          defaultChecked={true}
+          onChange={() => { props.toggleTheme(!props.isLightTheme) }} />
+      </div>
     </Footer>
   );
 }
