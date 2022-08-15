@@ -1,7 +1,9 @@
-import MainComponent from "./root/main";
+import './App.css';
+import 'animate.css';
+import { MainComponent } from './components/main';
 
-const App: React.FC = () => {
-  return <MainComponent />
+function App() {
+  return <MainComponent />;
 }
 
 export default App;
