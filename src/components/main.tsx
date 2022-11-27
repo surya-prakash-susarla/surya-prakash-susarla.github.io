@@ -63,7 +63,7 @@ export const MainComponent: React.FC = () => {
             right: '15px'
           }}
           onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode == 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+          {theme.palette.mode === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
         </Fab>
       </ThemeProvider>
     </ThemeModeContext.Provider>
