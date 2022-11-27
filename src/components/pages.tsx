@@ -59,13 +59,6 @@ export const HomeComponent: React.FC<HomeComponentProps> = (props: HomeComponent
   );
 }
 
-export const ProjectsComponent: React.FC = () => {
-  return (
-    <Card variant='outlined' sx={{ scale: '0.9' }} className='animate__animated animte__fadeIn'>
-    </Card>
-  );
-}
-
 export const ResumeComponent: React.FC = () => {
   return (
     <Card variant='outlined' sx={{ scale: '0.9' }} className='animate__animated animte__fadeIn'>

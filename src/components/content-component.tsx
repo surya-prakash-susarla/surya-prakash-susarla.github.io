@@ -6,7 +6,8 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import React from 'react';
 import { BottomNavigation, BottomNavigationAction, Grid } from '@mui/material';
 import { PageSelection } from './constants';
-import { ProjectsComponent, ContactMeComponent, HomeComponent, ResumeComponent } from './pages';
+import { ContactMeComponent, HomeComponent, ResumeComponent } from './pages';
+import { ProjectsComponent } from './projects-component';
 
 const getContentPageForSelection =
   (page_selection: PageSelection,
