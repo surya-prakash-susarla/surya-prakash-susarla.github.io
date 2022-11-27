@@ -6,7 +6,7 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import React from 'react';
 import { BottomNavigation, BottomNavigationAction, Grid } from '@mui/material';
 import { PageSelection } from './constants';
-import { AboutMeComponent, ContactMeComponent, HomeComponent, ResumeComponent } from './pages';
+import { ProjectsComponent, ContactMeComponent, HomeComponent, ResumeComponent } from './pages';
 
 const getContentPageForSelection =
   (page_selection: PageSelection,
@@ -16,8 +16,8 @@ const getContentPageForSelection =
       case PageSelection.Home:
         content = <HomeComponent pageSelector={togglePageSelection}/>
         break;
-      case PageSelection.AboutMe:
-        content = <AboutMeComponent />;
+      case PageSelection.Projects:
+        content = <ProjectsComponent />;
         break;
       case PageSelection.Resume:
         content = <ResumeComponent />;
@@ -50,7 +50,7 @@ export const ContentComponent: React.FC = () => {
             setPageSelection(newValue);
           }}>
           <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-          <BottomNavigationAction label="About Me" icon={<InfoIcon />} />
+          <BottomNavigationAction label="My Work" icon={<InfoIcon />} />
           <BottomNavigationAction label="Résumé" icon={<DescriptionIcon />} />
           <BottomNavigationAction label="Contact" icon={<ContactPageIcon />} />
         </BottomNavigation>
