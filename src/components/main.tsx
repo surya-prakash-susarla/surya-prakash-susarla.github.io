@@ -57,7 +57,7 @@ export const MainComponent: React.FC = () => {
         </Grid>
         <Fab color='primary'
           sx={{
-            position: 'absolute',
+            position: 'fixed',
             zIndex: '1',
             bottom: '15px',
             right: '15px'
