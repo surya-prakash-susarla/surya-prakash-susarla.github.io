@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import React from 'react';
 
 export const FooterBar: React.FC = () => {
@@ -15,9 +15,12 @@ export const FooterBar: React.FC = () => {
   }, []);
 
   return (
-    <Typography variant='subtitle1' align='center' sx={{fontFamily: "'M PLUS 1 Code', sans-serif", fontSize: '10px'}}  gutterBottom>
-      {time}
-    </Typography>
+    <React.Fragment>
+        <Divider role='presentation' variant='middle' />
+        <Typography variant='subtitle1' align='center' sx={{fontFamily: "'M PLUS 1 Code', sans-serif", fontSize: '10px'}}  gutterBottom>
+          {time}
+        </Typography>     
+    </React.Fragment>
   );
 }
 
