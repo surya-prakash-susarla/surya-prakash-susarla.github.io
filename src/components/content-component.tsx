@@ -40,9 +40,9 @@ export const ContentComponent: React.FC = () => {
   const [page_selection, setPageSelection] = React.useState(PageSelection.Home);
 
   return (
-    <Grid container sx={{ height: '100%', width: '100%' }}
+    <Grid container height={'100%'} width={'100%'}
       direction='column' justifyContent={'space-between'}
-      alignItems={'center'}>
+      alignItems={'center'} sx={{'overflow-y': 'scroll'}}>
       <Grid item sx={{ width: '100%', height: '10%' }}>
         <BottomNavigation showLabels
           sx={{ width: '100%', justifyContent: 'space-evenly' }}

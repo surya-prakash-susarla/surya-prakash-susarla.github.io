@@ -41,19 +41,10 @@ export const MainComponent: React.FC = () => {
     <ThemeModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Grid container
-          sx={{ height: '100vh', width: '100vw' }}
-          direction='row' justifyContent={'flex-start'}
-          alignItems={'center'}>
-          <Grid item sx={{ width: '100%', height: 'fit-content' }}>
-            <HeaderBar />
-          </Grid>
-          <Grid item sx={{ width: '100%', height: 'fit-content' }}>
-            <ContentComponent />
-          </Grid>
-          <Grid item sx={{ width: '100%', height: 'fit-content' }}>
-            <FooterBar />
-          </Grid>
+        <Grid container justifyContent={'center'} height={'100%'} width={'100%'}>
+          <Grid item width={'100%'}><HeaderBar /></Grid>
+          <Grid item height={'77%'} width={'100%'}><ContentComponent /></Grid>
+          <Grid item height={'3%'} width={'100%'}><FooterBar /></Grid>
         </Grid>
         <Fab color='primary'
           sx={{
