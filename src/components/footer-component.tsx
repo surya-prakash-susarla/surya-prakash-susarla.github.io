@@ -1,5 +1,5 @@
-import { Divider, Typography } from '@mui/material';
-import React from 'react';
+import { Divider, Typography } from "@mui/material";
+import React from "react";
 
 export const FooterBar: React.FC = () => {
   const [time, setTime] = React.useState(new Date().toLocaleString());
@@ -16,12 +16,15 @@ export const FooterBar: React.FC = () => {
 
   return (
     <React.Fragment>
-        <Divider role='presentation' variant='middle' />
-        <Typography variant='subtitle1' align='center' sx={{fontFamily: "'M PLUS 1 Code', sans-serif", fontSize: '10px'}}  gutterBottom>
-          {time}
-        </Typography>     
+      <Divider role="presentation" variant="middle" />
+      <Typography
+        variant="subtitle1"
+        align="center"
+        sx={{ fontFamily: "'M PLUS 1 Code', sans-serif", fontSize: "10px" }}
+        gutterBottom
+      >
+        {time}
+      </Typography>
     </React.Fragment>
   );
-}
-
-
+};
