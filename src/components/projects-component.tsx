@@ -6,9 +6,11 @@ import {
   Link,
   List,
   ListItem,
-  Typography
+  Typography,
+  Stack
 } from "@mui/material";
 import ProjectDetails from './project-details.json';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 interface ProjectItemProps {
   item_key: number;
@@ -31,7 +33,10 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
       </CardContent>
       <CardActions>
         <Link href={props.link} target={'_blank'} rel='noreferrer'>
-          {"Link to Project"}
+          <Stack direction='row' alignItems={'center'} gap={1}>
+            <OpenInNewIcon />
+            {"Link to Project"}
+          </Stack>
         </Link>
       </CardActions>
       </Card>
