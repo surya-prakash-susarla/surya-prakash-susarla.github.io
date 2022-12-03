@@ -29,11 +29,7 @@ const getContentPageForSelection =
       default:
         return <div></div>;
     }
-    return (
-      <div className='animate__animated animate__fadeIn'>
-        {content}
-      </div>
-    );
+    return content;
   }
 
 export const ContentComponent: React.FC = () => {
@@ -41,7 +37,7 @@ export const ContentComponent: React.FC = () => {
 
   return (
     <Grid container height={'100%'} width={'100%'}
-      direction='column' justifyContent={'space-between'}
+      direction='row' justifyContent={'flex-start'}
       alignItems={'center'} sx={{'overflow-y': 'scroll'}}>
       <Grid item sx={{ width: '100%', height: '10%' }}>
         <BottomNavigation showLabels
@@ -56,8 +52,8 @@ export const ContentComponent: React.FC = () => {
           <BottomNavigationAction label="Contact" icon={<ContactPageIcon />} />
         </BottomNavigation>
       </Grid>
-      <Grid item sx={{ width: '100%', height: '85%' }}>
-        <div style={{ height: '100%', width: '100%', fontFamily: "'Encode Sans Expanded', sans-serif" }}>
+      <Grid item sx={{ width: '100%', height: '90%' }}>
+        <div style={{ height: '100%', width: '100%', fontFamily: "'Encode Sans Expanded', sans-serif" }} className='animate__animated animate__fadeIn'>
           {getContentPageForSelection(page_selection, setPageSelection)}
         </div>
       </Grid>

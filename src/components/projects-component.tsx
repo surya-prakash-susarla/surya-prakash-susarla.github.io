@@ -20,7 +20,7 @@ interface ProjectItemProps {
 const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
   return (
     <ListItem key={props.item_key}>
-      <Card variant='outlined' sx={{ scale: '0.9' , height: 'fit-content', width: 'fit-content'}} className='animate__animated animate__fadeIn'>
+      <Card variant='outlined' sx={{'width' : '100%'}} className='animate__animated animate__fadeIn'>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {props.title}
@@ -49,7 +49,7 @@ const generateProjectList = (): Array<JSX.Element> => {
 
 export const ProjectsComponent: React.FC = () => {
   return (
-    <Card variant='outlined' sx={{ scale: '0.9' }} className='animate__animated animte__fadeIn'>
+    <Card variant='outlined'>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'Here are a few things I have worked on in my spare time,'}

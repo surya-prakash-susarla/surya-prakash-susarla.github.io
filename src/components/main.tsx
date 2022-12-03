@@ -42,8 +42,8 @@ export const MainComponent: React.FC = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Grid container justifyContent={'center'} height={'100%'} width={'100%'}>
-          <Grid item width={'100%'}><HeaderBar /></Grid>
-          <Grid item height={'77%'} width={'100%'}><ContentComponent /></Grid>
+          <Grid item height={'13%'} width={'100%'}><HeaderBar /></Grid>
+          <Grid item height={'84%'} width={'100%'}><ContentComponent /></Grid>
           <Grid item height={'3%'} width={'100%'}><FooterBar /></Grid>
         </Grid>
         <Fab color='primary'
