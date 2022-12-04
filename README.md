@@ -1,6 +1,6 @@
 # Personal portfolio website.
 
-## [Location](https://surya-06.github.io)
+## [GitHub Pages Link](https://surya-06.github.io)
 
 ## Usage Instructions:
 1. Run 'npm run build'
