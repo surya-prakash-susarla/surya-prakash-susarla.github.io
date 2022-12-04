@@ -26,7 +26,7 @@ interface HomeComponentProps {
 
 export const HomeComponent: React.FC<HomeComponentProps> = (props: HomeComponentProps) => {
   return (
-    <Card variant='outlined' sx={{ scale: '0.9' }}>
+    <Card variant='outlined' className='animate__animated animate__fadeIn'>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'Hello!'}
@@ -40,6 +40,9 @@ export const HomeComponent: React.FC<HomeComponentProps> = (props: HomeComponent
           <br />
           I am an experienced system and full-stack software engineer
           interested in the areas of software engineering, data analysis, full-stack and mobile development.
+          I am currently pursuing Masters in Computer Science from North Carolina State University at Raleigh, North Carolina. My primary focus is in the areas of Software Engineering and System Design.
+          In addition to software development, my other interests are in the areas of product management and user engagement. Some of my experiences in these areas include facilitating user studies to understand customer pain-points, drawing actionable conclusions from large scale data points and designing experiments to increase user retention.
+          Outside of computers, I love driving, urban exploration and discovering local hotspots.
           <br />
           <br />
           {'Actively looking for internship and full-time opportunities starting from Summer 2023.'}
@@ -56,30 +59,9 @@ export const HomeComponent: React.FC<HomeComponentProps> = (props: HomeComponent
   );
 }
 
-export const AboutMeComponent: React.FC = () => {
-  return (
-    <Card variant='outlined' sx={{ scale: '0.9' }} className='animate__animated animte__fadeIn'>
-      <CardContent>
-        <Typography variant='h6' color='text.secondary' gutterBottom>
-          {'A little bit about me,'}
-        </Typography>
-        <Typography variant='body1' paragraph>
-          {'I am currently pursuing Masters in Computer Science from North Carolina State University at Raleigh, North Carolina. My primary focus is in the areas of Software Engineering and System Design.'}
-          <br />
-          <br />
-          {'In addition to software development, my other interests are in the areas of product management and user engagement. Some of my experiences in these areas include facilitating user studies to understand customer pain-points, drawing actionable conclusions from large scale data points and designing experiments to increase user retention.'}
-          <br />
-          <br />
-          {'Outside of computers, I love driving, urban exploration and discovering local hotspots.'}
-        </Typography>
-      </CardContent>
-    </Card>
-  );
-}
-
 export const ResumeComponent: React.FC = () => {
   return (
-    <Card variant='outlined' sx={{ scale: '0.9' }} className='animate__animated animte__fadeIn'>
+    <Card variant='outlined' className='animate__animated animate__fadeIn'>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'For further details,'}
@@ -99,7 +81,7 @@ export const ResumeComponent: React.FC = () => {
 
 export const ContactMeComponent: React.FC = () => {
   return (
-    <Card variant='outlined' sx={{ scale: '0.9' }} className='animate__animated animte__fadeIn'>
+    <Card variant='outlined' className='animate__animated animate__fadeIn'>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'You can reach me through,'}
