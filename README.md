@@ -1,5 +1,7 @@
 # Personal portfolio website.
 
+## [Location](https://surya-06.github.io)
+
 ## Usage Instructions:
 1. Run 'npm run build'
 2. Ensure all folders (including 'static') are included in the commit.
