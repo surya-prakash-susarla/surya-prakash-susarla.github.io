@@ -13,10 +13,11 @@ import {
   Typography
 } from "@mui/material"
 import React from "react";
-import { kLinkedinLink, kResumeLink, PageSelection } from "./constants";
+import { kGithubLink, kLinkedinLink, kResumeLink, PageSelection } from "./constants";
 
 import EmailIcon from '@mui/icons-material/Email';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import HomeIcon from '@mui/icons-material/Home';
 
@@ -80,6 +81,7 @@ export const ResumeComponent: React.FC = () => {
 }
 
 export const ContactMeComponent: React.FC = () => {
+  let margin_style = {marginLeft: '10px', marginRight: '10px'};
   return (
     <Card variant='outlined' className='animate__animated animate__fadeIn' style={{marginLeft: '20px', marginRight: '20px'}}>
       <CardContent>
@@ -89,7 +91,7 @@ export const ContactMeComponent: React.FC = () => {
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <EmailIcon />
-            <Typography variant='body1'>
+            <Typography variant='body1' style={margin_style}>
               {'Email'}
             </Typography>
           </AccordionSummary>
@@ -107,7 +109,7 @@ export const ContactMeComponent: React.FC = () => {
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <LinkedInIcon />
-            <Typography variant='body1'>
+            <Typography variant='body1' style={margin_style}>
               {'LinkedIn'}
             </Typography>
           </AccordionSummary>
@@ -118,9 +120,22 @@ export const ContactMeComponent: React.FC = () => {
           </AccordionDetails>
         </Accordion>
         <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <GitHubIcon />
+            <Typography variant="body1" style={margin_style}>
+              {'GitHub'}
+            </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Link href={kGithubLink} underline='hover' target={'_blank'} rel='noreferrer'>
+            {"Surya Prakash Susarla's GitHub"}
+          </Link>
+        </AccordionDetails>
+        </Accordion>
+        <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <HomeIcon />
-            <Typography variant='body1'>
+            <Typography variant='body1' style={margin_style}>
               {'Home Address'}
             </Typography>
           </AccordionSummary>

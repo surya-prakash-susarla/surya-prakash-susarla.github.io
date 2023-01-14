@@ -13,3 +13,5 @@ export const kResumeLink = "https://drive.google.com/file/d/1DqTwNJzKFim2b1LYht_
 
 export const kLinkedinLink = "https://www.linkedin.com/in/surya-prakash-susarla/";
 
+export const kGithubLink = "https://github.com/surya-prakash-susarla";
+
