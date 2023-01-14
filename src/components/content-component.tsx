@@ -51,7 +51,7 @@ export const ContentComponent: React.FC = () => {
           showLabels
           sx={{ width: "100%", justifyContent: "space-evenly" }}
           value={page_selection}
-          onChange={(event, newValue) => {
+          onChange={(_event, newValue) => {
             setPageSelection(newValue);
           }}
         >

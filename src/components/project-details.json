@@ -1,9 +1,49 @@
 {
   "contents": [
     {
-      "title": "Wiki Speaker",
-      "desc": "Gives voice output of entered seach query by getting information from Wikipedia.",
-      "link": "https://github.com/Surya-06/wiki-speaker"
+      "title": "Rust crate for one shot web request handling",
+      "desc": "Build a crate for handling one-shot web requests for client side/ command line applications in Rust. Common use cases such as receiving token after authentication etc. can be handled using this crate in a synchronous manner. Deployed to crates.io",
+      "link": "https://github.com/surya-prakash-susarla/rust-oneshotserver"
+    },
+    {
+      "title": "AUTOR",
+      "desc": "Collaborator on a group project for CSC 540 at NCSU to demonstrate usage of database systems through a full scale task management system with the view of automotive mangement applications.",
+      "link": "https://github.com/Surya-06/DBMS-540-AUTOR"
+    },
+    {
+      "title": "GIT Quiz",
+      "desc": "Created and deployed a real-time web-based code judge used for assessment of tests taken by more than 100 students simultaneously. Supported languages include C, C++, Python and Java. Built using NodeJS, Redux and C++.",
+      "link": "https://github.com/Surya-06/git_quiz"
+    },
+    {
+      "title": "Smart Spend",
+      "desc": "Collaborator on the group project to create a Telegram bot to track spending and send updates.",
+      "link": "https://github.com/kaushikjadhav01/SmartSpend"
+    },
+    {
+      "title": "Catch It!",
+      "desc" : "Built a gesture-based arcade-game using OpenCV and PyGame. Player can control the cursor by movement of the object set to be tracked with image processing and pixel masking.",
+      "link": "https://github.com/Surya-06/Catch-It-"
+    },
+    {
+      "title": "This Website!",
+      "desc": "This website also started as one of my projects and is currently hosted as a static website on GitHub pages.",
+      "link": "https://github.com/Surya-06/surya-06.github.io"
+    },
+    {
+      "title": "Reddit Migrator",
+      "desc": "A quick Pyton script to transfer Reddit subscriptions & preferences from one account to another in an instant.",
+      "link": "https://github.com/Surya-06/Reddit-migrator"
+    },
+    {
+      "title": "Fork - XpensAuditor",
+      "desc": "Contributor to the fork of the project XpensAuditor which is an Android app that uses Google Firebase and MailJet APIs to manage and share expenses. Fun Fact: Experimented with GitHub organization and project management tools to create an organization for our team which was the first to use such mechanism in the class.",
+      "link": "https://github.com/NCSU-Fall-2022-SE-Project-Team-11/XpensAuditor---Group-11"
+    },
+    {
+      "title": "WebRTC FileShare",
+      "desc": "This project uses the WebRTC protocol to establish a peer-to-peer connection and provide a quick utility for sharing files between offline devices which can communicate with each other (i.e., the devices are network reachable).",
+      "link": "https://github.com/Surya-06/WebRTC-FileShare"
     },
     {
       "title" : "Tic-Tac-Toe Bot",
@@ -26,49 +66,14 @@
       "link": "https://github.com/Surya-06/Space-Hunter"
     },
     {
-      "title": "Web mp3 Downoad Util",
-      "desc": "A simple python script to download mp3 files (written before yt-dl added this functionality.",
+      "title": "Wiki Speaker",
+      "desc": "Gives voice output of entered seach query by getting information from Wikipedia.",
+      "link": "https://github.com/Surya-06/wiki-speaker"
+    },
+    {
+      "title": "Web mp3 Download Util",
+      "desc": "A simple python script to download mp3 files (written before yt-dl added this functionality.)",
       "link": "https://github.com/Surya-06/web-mp3"
-    },
-    {
-      "title": "GIT Quiz",
-      "desc": "Created and deployed a real-time web-based code judge used for assessment of tests taken by more than 100 students simultaneously. Supported languages include C, C++, Python and Java. Built using NodeJS, Redux and C++.",
-      "link": "https://github.com/Surya-06/git_quiz"
-    },
-    {
-      "title": "Smart Spend",
-      "desc": "Collaborator on the group project to create a Telegram bot to track spending and send updates.",
-      "link": "https://github.com/kaushikjadhav01/SmartSpend"
-    },
-    {
-      "title": "Catch It!",
-      "desc" : "Built a gesture-based arcade-game using OpenCV and PyGame. Player can control the cursor by movement of the object set to be tracked with image processing and pixel masking.",
-      "link": "https://github.com/Surya-06/Catch-It-"
-    },
-    {
-      "title": "AUTOR",
-      "desc": "Collaborator on a group project for CSC 540 at NCSU to demonstrate usage of database systems through a full scale task management system with the view of automotive mangement applications.",
-      "link": "https://github.com/Surya-06/DBMS-540-AUTOR"
-    },
-    {
-      "title": "This Website!",
-      "desc": "This website also started as one of my projects and is currently hosted as a static website on GitHub pages.",
-      "link": "https://github.com/Surya-06/surya-06.github.io"
-    },
-    {
-      "title": "Reddit Migrator",
-      "desc": "A quick Pyton script to transfer Reddit subscriptions & preferences from one account to another in an instant.",
-      "link": "https://github.com/Surya-06/Reddit-migrator"
-    },
-    {
-      "title": "Fork - XpensAuditor",
-      "desc": "Contributor to the fork of the project XpensAuditor which is an Android app that uses Google Firebase and MailJet APIs to manage and share expenses. Fun Fact: Experimented with GitHub organization and project management tools to create an organization for our team which was the first to use such mechanism in the class.",
-      "link": "https://github.com/NCSU-Fall-2022-SE-Project-Team-11/XpensAuditor---Group-11"
-    },
-    {
-      "title": "WebRTC FileShare",
-      "desc": "This project uses the WebRTC protocol to establish a peer-to-peer connection and provide a quick utility for sharing files between offline devices which can communicate with each other (i.e., the devices are network reachable).",
-      "link": "https://github.com/Surya-06/WebRTC-FileShare"
     }
   ]
 }
