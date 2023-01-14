@@ -10,3 +10,4 @@
 ## NOTE:
 1. Ensure that docs folder is never included in the gitignore file.
 2. Always run 'npm run build' and check the generated files before deployment.
+
