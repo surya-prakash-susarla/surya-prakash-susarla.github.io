@@ -26,7 +26,7 @@ interface HomeComponentProps {
 
 export const HomeComponent: React.FC<HomeComponentProps> = (props: HomeComponentProps) => {
   return (
-    <Card variant='outlined' className='animate__animated animate__fadeIn'>
+    <Card variant='outlined' className='animate__animated animate__fadeIn' style={{marginLeft: '20px', marginRight: '20px'}}>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'Hello!'}
@@ -61,7 +61,7 @@ export const HomeComponent: React.FC<HomeComponentProps> = (props: HomeComponent
 
 export const ResumeComponent: React.FC = () => {
   return (
-    <Card variant='outlined' className='animate__animated animate__fadeIn'>
+    <Card variant='outlined' className='animate__animated animate__fadeIn' style={{marginLeft: '20px', marginRight: '20px'}}>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'For further details,'}
@@ -81,7 +81,7 @@ export const ResumeComponent: React.FC = () => {
 
 export const ContactMeComponent: React.FC = () => {
   return (
-    <Card variant='outlined' className='animate__animated animate__fadeIn'>
+    <Card variant='outlined' className='animate__animated animate__fadeIn' style={{marginLeft: '20px', marginRight: '20px'}}>
       <CardContent>
         <Typography variant='h6' color='text.secondary' gutterBottom>
           {'You can reach me through,'}
