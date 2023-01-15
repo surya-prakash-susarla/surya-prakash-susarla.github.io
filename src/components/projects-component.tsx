@@ -8,6 +8,7 @@ import {
   ListItem,
   Typography,
   Stack,
+  Chip,
 } from "@mui/material";
 import ProjectDetails from "./project-details.json";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -15,9 +16,17 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 interface ProjectItemProps {
   item_key: number;
   title: string;
+  tags: string[];
   desc: string;
   link: string;
 }
+
+const generateTags = (tags: string[]): Array<JSX.Element> => {
+    let list_items: Array<JSX.Element> = new Array<JSX.Element>();
+    for ( let i=0 ; i<tags.length ; i++ )
+        list_items.push(<Chip label={tags[i]} />);
+    return list_items;
+};
 
 const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
   return (
@@ -28,10 +37,13 @@ const ProjectItem: React.FC<ProjectItemProps> = (props: ProjectItemProps) => {
         className="animate__animated animate__fadeIn"
       >
         <CardContent>
-          <Typography variant="h6" color="text.secondary" gutterBottom>
+          <Typography variant="h5" gutterBottom>
             {props.title}
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography color={"text.secondary"} gutterBottom>
+            {generateTags(props.tags)}
+          </Typography>
+          <Typography variant="body2" paragraph>
             {props.desc}
           </Typography>
         </CardContent>
@@ -57,6 +69,7 @@ const generateProjectList = (): Array<JSX.Element> => {
         title={ProjectDetails.contents[i].title}
         desc={ProjectDetails.contents[i].desc}
         link={ProjectDetails.contents[i].link}
+        tags={ProjectDetails.contents[i].tags}
       />
     );
   }
