@@ -24,7 +24,7 @@ interface ProjectItemProps {
 const generateTags = (tags: string[]): Array<JSX.Element> => {
     let list_items: Array<JSX.Element> = new Array<JSX.Element>();
     for ( let i=0 ; i<tags.length ; i++ )
-        list_items.push(<Chip label={tags[i]} />);
+        list_items.push(<Chip label={tags[i]} style={{marginLeft: '5px', marginRight: '5px'}} />);
     return list_items;
 };
 
