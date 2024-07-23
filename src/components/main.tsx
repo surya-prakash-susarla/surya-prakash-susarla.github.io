@@ -1,80 +1,61 @@
-import "./main.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-
 import React from "react";
-import { HeaderBar } from "./header-component";
-import { Box, CssBaseline, Fab, Grid } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { FooterBar } from "./footer-component";
-import { ContentComponent } from "./content-component";
+import { ContentComponent } from "./content";
+import { WelcomeComponent } from "./welcome";
 
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-
-const ThemeModeContext = React.createContext({ toggleColorMode: () => {} });
-
-export const MainComponent: React.FC = () => {
-  const [mode, setMode] = React.useState<"light" | "dark">("dark");
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
-    }),
-    []
+const getFonts = (): JSX.Element => {
+  return (
+    <React.Fragment>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet"
+      ></link>
+    </React.Fragment>
   );
+};
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
+const getWideModeContent = (): JSX.Element => {
+  const style: React.CSSProperties = {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    height: "100%",
+  };
 
   return (
-    <ThemeModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Box
-          component={Grid}
-          container
-          justifyContent={"center"}
-          height={"100%"}
-          width={"100%"}
-        >
-          <Box component={Grid} item height={"13%"} width={"100%"}>
-            <HeaderBar />
-          </Box>
-          <Box component={Grid} item height={"84%"} width={"100%"}>
-            <ContentComponent />
-          </Box>
-          <Box component={Grid} item height={"3%"} width={"100%"}>
-            <FooterBar />
-          </Box>
-        </Box>
-        <Fab
-          color="primary"
-          sx={{
-            position: "fixed",
-            zIndex: "1",
-            bottom: "15px",
-            right: "15px",
-          }}
-          onClick={colorMode.toggleColorMode}
-        >
-          {theme.palette.mode === "light" ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
-        </Fab>
-      </ThemeProvider>
-    </ThemeModeContext.Provider>
+    <div style={style}>
+      <div style={{ width: "40%" }}>{WelcomeComponent()}</div>
+      <div style={{ width: "60%" }}>{ContentComponent()}</div>
+    </div>
+  );
+};
+
+const getMobileModeContent = (): JSX.Element => {
+  const fullHeightStyle: React.CSSProperties = { };
+  return (
+    <div style={fullHeightStyle}>
+      <div style={fullHeightStyle}>{ContentComponent()}</div>
+    </div>
+  );
+};
+
+export const MainComponent = (): JSX.Element => {
+  const isWideMode: boolean = window.innerWidth >= 912;
+
+  const content: JSX.Element = isWideMode
+    ? getWideModeContent()
+    : getMobileModeContent();
+
+  const style: React.CSSProperties = {
+    height: "100vh",
+    width: "100vw",
+  };
+
+  return (
+    <div style={style}>
+      {getFonts()}
+      {content}
+    </div>
   );
 };
