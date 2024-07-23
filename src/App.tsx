@@ -1,9 +1,12 @@
 import './App.css';
-import 'animate.css';
 import { MainComponent } from './components/main';
 
 function App() {
-  return <MainComponent />;
+  return (
+    <div className="App">
+      {MainComponent()}
+    </div>
+  );
 }
 
 export default App;
