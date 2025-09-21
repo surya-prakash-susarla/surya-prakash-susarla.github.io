@@ -3,7 +3,7 @@ module.exports = function(eleventyConfig) {
 
   return {
     dir: {
-      output: "dist",
+      output: "docs",
       layouts: "layouts"
     }
   }
