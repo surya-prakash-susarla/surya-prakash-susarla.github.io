@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surya's Log</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Surya Susarla</h1>
+      <p class="subtitle">Dev log - <a href="/">About</a></p>
+      <div class="separator"></div>
+    </header>
+    <nav class="nav">
+      <ul><li><a href="/posts/setting-up-this-blog/">Setting up this page - 20 Sep 2025</a></li><li><a href="/posts/revisiting-bloom-filters/">Revisiting Bloom Filters - 21 Sep 2025</a></li></ul>
+    </nav>
+    <main class="main">
+      <h1>Revisiting Bloom Filters</h1>
+<h3>Background</h3>
+<p>In a recent conversation, there was a mention about using Bloom Filters and all I could remember was that, they were basically like a hash set but with an aspect of probability involved, so I wanted to revisit the concept again to refresh my understanding. This one should be pretty short though.</p>
+<h3>Use case</h3>
+<p>You have a value and you want to check for its existence in a large set, what do you do? We have the usual options, linear search (bad) and the obvious binary search (pretty fast), but what if you could do it faster? Hashing doesn't really make a difference because what's changing is only the time per comparison but not the number of comparisons themselves. That's where this comes in.</p>
+<h3>Intuition</h3>
+<p>Bloom filters are a compromise between hashing and a direct lookup. Basically, you generate hashes, and you map them into deterministic positions so that it becomes an O(1) lookup. The tradeoff being, the mapping to determinstic spots mean that there is a higher probability of conflicts and that's where it becomes a probability.</p>
+<h3>Things to consider</h3>
+<p>These are extremely handy when the false positives are tolerable i.e., if the use-case can tolerate the algorithm saying that the given key exists in the set, although it might not exist in reality, then these make excellent candidates. The data structure also ensures that if something doesn't exist in the set, then you get 100% accurate false response. So, for applications like recommendations or initial pruning etc. , this data structure makes a great candidate.</p>
+<h3>Simplified working</h3>
+<ol>
+<li>First, we need to decide on the expected number of items we want to store in the filter, let's call this 'n'.</li>
+<li>We need to select the size of the bloom filter itself, which is a simple bit array. Let's call the size of this array 'm'.</li>
+<li>Next, we need to select the number of hash functions to use, let's call this 'k'. These hash functions will be applied to each input item to generate 'k' different hash values.</li>
+<li>We start with an empty bit array (all bits are 0). When we add an item to the filter, we feed it to our 'k' hash functions. Each hash function's output is mapped to an index in the bit array (e.g., via a modulo operation), and we set the bits at those 'k' indices to 1.</li>
+<li>To check if an item exists, we perform the same process: we hash the item 'k' times and check the bits at the resulting 'k' indices. If any of the bits are 0, the item is <strong>definitely not</strong> in the set. If all the bits are 1, the item <strong>might be</strong> in the set. It's not a certainty because those same bits could have been set to 1 by other items. This is the source of false positives.</li>
+<li>The probability of false positives is determined by the size of the array ('m'), the number of items stored ('n'), and the number of hash functions ('k').</li>
+</ol>
+<h3>Things to remember:</h3>
+<ol>
+<li>Deletion is not possible in bloom filters (since the bits are shared among multiple entries, flipping a random bit would affect the hash of a completely different entry as well).</li>
+<li>Hash functions can be simple and do not have to be cryptographically secure since the collision bottleneck is due to the modulo operation.</li>
+<li>For planet sized applciations, you will quickly overflow the typical RAM limits so maybe try other options, Cuckoo filters etc.</li>
+</ol>
+<h3>Useful Things:</h3>
+<pre><code>Number of items in filter: n = ceil(m / (-k / log(1 - exp(log(p) / k))))
+Probability of false positives: p = pow(1 - exp(-k / (m / n)), k)
+Number of bits in filter: m = ceil((n * log(p)) / log(1 / pow(2, log(2))));
+Number of hash functions: k = round((m / n) * log(2)); 
+</code></pre>
+<p>The above formulas where from <a href="https://hur.st/bloomfilter/?n=10000000000&amp;p=1.0E-9&amp;m=&amp;k=">Bloom Filter Calculator</a></p>
+<p>And for more detailed explanation <a href="https://www.geeksforgeeks.org/python/bloom-filters-introduction-and-python-implementation/">GeeksForGeeks</a></p>
+
+    </main>
+  </div>
+</body>
+</html>
