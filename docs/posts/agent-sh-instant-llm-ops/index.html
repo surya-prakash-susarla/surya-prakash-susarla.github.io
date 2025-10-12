@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surya's Log</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Surya Susarla</h1>
+      <p class="subtitle">Dev log - <a href="/">About</a></p>
+      <div class="separator"></div>
+    </header>
+    <nav class="nav">
+      <ul><li><a href="/posts/setting-up-this-blog/">Setting up this page - 20 Sep 2025</a></li><li><a href="/posts/revisiting-bloom-filters/">Revisiting Bloom Filters - 21 Sep 2025</a></li><li><a href="/posts/agent-sh-instant-llm-ops/">Agent.sh — Instant LLM Ops On Any Shell</a></li></ul>
+    </nav>
+    <main class="main">
+      <h1>Agent.sh — Instant LLM Ops On Any Shell</h1>
+<p>I’ve always wanted a way to drop onto a random Linux box—fresh Arch VM, prod bastion, whatever—and get LLM superpowers without installing half the internet first. Agent.sh is the answer: a single Bash script that spins up a REPL, proxies an OpenAI-compatible chat endpoint, and can execute shell commands (with my approval) on demand. No daemons, no Python runtimes, no magical background services—just curl, jq, and the terminal.</p>
+<h2>Why build it?</h2>
+<p>Setting up Arch from scratch reminded me how much context-switching it takes to go hunt down obscure flags or man pages. I wanted the model to do the reasoning and let me simply approve the commands. That meant:</p>
+<ul>
+<li><strong>Zero-runtime footprint.</strong> Pure Bash + standard utilities so it runs anywhere.</li>
+<li><strong>Explicit control.</strong> The model must ask before launching anything, and I get to approve/deny.</li>
+<li><strong>Multi-turn tool loops.</strong> The agent should chain commands (run → inspect output → run more) without losing context.</li>
+<li><strong>No persistent services.</strong> Just download the script and go.</li>
+</ul>
+<h2>Architecture in one shot</h2>
+<p>Everything lives under <code>src/</code> with a tiny bashly config generating the CLI:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it does</th>
+<th>File(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLI Scaffolding</strong></td>
+<td><code>bashly.yml</code> + <code>build.sh</code> emit the final <code>dist/agent</code> binary.</td>
+<td><code>bashly.yml</code>, <code>build.sh</code>, <code>dist/agent</code></td>
+</tr>
+<tr>
+<td><strong>Entry Point</strong></td>
+<td>Prints the resolved config and enters the REPL.</td>
+<td><code>src/root_command.sh</code></td>
+</tr>
+<tr>
+<td><strong>System Instruction</strong></td>
+<td>Long-form prompt that tells the LLM how to behave (tool JSON format, network-safety rules).</td>
+<td><code>src/lib/instructions.sh</code></td>
+</tr>
+<tr>
+<td><strong>REPL Loop</strong></td>
+<td>Handles user input, displays labeled blocks, logs history, and mediates tool approvals.</td>
+<td><code>src/lib/repl.sh</code></td>
+</tr>
+<tr>
+<td><strong>Network Layer</strong></td>
+<td>Posts <code>.agent_conversation</code> to the endpoint, parses tool calls vs. assistant replies, propagates API errors.</td>
+<td><code>src/lib/network.sh</code></td>
+</tr>
+<tr>
+<td><strong>Logging Helpers</strong></td>
+<td>Debug output gating (<code>--debug</code> flag).</td>
+<td><code>src/lib/logging.sh</code></td>
+</tr>
+</tbody>
+</table>
+<p>Conversation state is just a JSON lines file (<code>.agent_conversation</code>). Each turn gets appended as <code>{role, content}</code> (system/user/assistant/tool). That history is sent back to the LLM every time so the model remembers previous turns.</p>
+<h2>Tool calls, done right</h2>
+<p>Originally the loop would re-run the same command if the model tried a multi-step flow. I fixed that by structuring the response from <code>get_response()</code> as a typed JSON object:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;tool&quot;,
+  &quot;assistant_message&quot;: { ... raw LLM message ... },
+  &quot;command&quot;: &quot;git log -n 5 --oneline&quot;
+}
+</code></pre>
+<p>Whenever <code>type</code> is <code>tool</code>, the REPL records the assistant’s request, prints a <code>[Tool Request]</code> block, asks for approval, and only after the command finishes does it append a <code>tool</code> message with stdout/stderr. The loop keeps running until the model sends a normal assistant reply (<code>type: &quot;assistant&quot;</code>).</p>
+<p>The REPL output is now much cleaner:</p>
+<pre><code>[User]
+&gt; can you run git log -n 5 --oneline?
+
+[Tool Request]
+  git log -n 5 --oneline
+[Approval] Run this command? (y/n) y
+
+[Assistant]
+  ab367ff test: Add comprehensive denial and approval tests
+  fd7a639 test: Implement comprehensive test suite for tool use
+  ...
+</code></pre>
+<p>That formatting makes long sessions easier to follow, especially when the agent fires multiple commands back-to-back.</p>
+<h2>Web lookups without tears</h2>
+<p>I added a prompt section telling the model how to use <code>curl</code>/<code>wget</code> safely:</p>
+<ul>
+<li>Always run with <code>-s</code>, <code>--fail</code>, and timeouts.</li>
+<li>Prefer plain text or JSON endpoints (DuckDuckGo Lite, Wikipedia API, etc.).</li>
+<li>No binary downloads unless the user explicitly asks.</li>
+<li>Summarize the result and cite the URL.</li>
+<li>Report failures instead of retrying blindly.</li>
+</ul>
+<p>This keeps the shell script lightweight—no complicated HTML parsing—and the model still fetches whatever docs it needs.</p>
+<h2>Tests you can trust</h2>
+<p>Everything is exercised via shell scripts under <code>tests/</code>:</p>
+<ul>
+<li><code>test_conversation.sh</code> verifies normal chat and memory.</li>
+<li><code>test_tool_use.sh</code> covers command execution and approval.</li>
+<li><code>test_simple_denial.sh</code>, <code>test_multi_denial.sh</code>, <code>test_recursive_approval.sh</code> walk through denial/approval edge cases.</li>
+</ul>
+<p>Each script now reads <code>AGENT_ENDPOINT</code> and <code>AGENT_MODEL</code> from the environment, so you can point the suite at any endpoint without editing code:</p>
+<pre><code class="language-bash">export AGENT_ENDPOINT=&quot;http://demo-llm.local:11434&quot;
+export AGENT_MODEL=&quot;gpt-oss:20b&quot;
+bash run_tests.sh
+</code></pre>
+<p>Logs drop into <code>outputs/*.log</code> so you can review exactly what happened.</p>
+<h2>Shipping it</h2>
+<p>To make this actually usable by other people:</p>
+<ol>
+<li>The built binary (<code>dist/agent</code>) is versioned in git.</li>
+<li>Releases (e.g., <a href="https://github.com/surya-prakash-susarla/agent_sh/releases/tag/v1.0.0">v1.0.0</a>) include the binary as a downloadable asset.</li>
+<li>The README now has an onboarding checklist (Download → Configure → Run) plus embedded transcripts of real sessions.</li>
+<li>Everything’s MIT-licensed.</li>
+</ol>
+<p>The end result: download a single file, point it at your OpenAI-compatible server, and you instantly have an LLM shell sidekick.</p>
+<h2>What’s next?</h2>
+<p>Stuff I’d love to explore:</p>
+<ul>
+<li>Optional helper functions for common web APIs (DuckDuckGo, package search, etc.).</li>
+<li>Alternative tool types (<code>git</code>, <code>apt</code>, <code>systemctl</code>) routed to specific helper scripts.</li>
+<li>Maybe a persistent memory layer for long-running projects.</li>
+</ul>
+<p>But even as-is, Agent.sh already solves my day-one VM setup pain. Drop the binary onto a fresh Arch box, set the endpoint, and let the LLM sweat the details while you stay in control.</p>
+<p>Grab it here: <a href="https://github.com/surya-prakash-susarla/agent_sh">github.com/surya-prakash-susarla/agent_sh</a></p>
+
+    </main>
+  </div>
+</body>
+</html>
