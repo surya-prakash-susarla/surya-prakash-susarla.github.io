@@ -8,6 +8,8 @@ tags: posts
 
 I’ve always wanted a way to drop onto a random Linux box—fresh Arch VM, prod bastion, whatever—and get LLM superpowers without installing half the internet first. Agent.sh is the answer: a single Bash script that spins up a REPL, proxies an OpenAI-compatible chat endpoint, and can execute shell commands (with my approval) on demand. No daemons, no Python runtimes, no magical background services—just curl, jq, and the terminal.
 
+Grab the code here: [github.com/surya-prakash-susarla/agent_sh](https://github.com/surya-prakash-susarla/agent_sh)
+
 ## Why build it?
 
 Setting up Arch from scratch reminded me how much context-switching it takes to go hunt down obscure flags or man pages. I wanted the model to do the reasoning and let me simply approve the commands. That meant:
@@ -116,4 +118,3 @@ Stuff I’d love to explore:
 But even as-is, Agent.sh already solves my day-one VM setup pain. Drop the binary onto a fresh Arch box, set the endpoint, and let the LLM sweat the details while you stay in control.
 
 Grab it here: [github.com/surya-prakash-susarla/agent_sh](https://github.com/surya-prakash-susarla/agent_sh)
-
