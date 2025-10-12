@@ -1,0 +1,84 @@
+<h1>Personal Site (surya-prakash-susarla.github.io)</h1>
+<p>This repo powers my blog and landing page at <a href="https://surya-prakash-susarla.github.io">surya-prakash-susarla.github.io</a>. It is an <a href="https://www.11ty.dev/">Eleventy</a> project that compiles Markdown posts into a static site inside the <code>docs/</code> directory (GitHub Pages serves from <code>docs/</code> on the main branch).</p>
+<h2>Project Layout</h2>
+<pre><code>css/                    # Global styles (style.css)
+docs/                   # Generated site after `npm run build`
+layouts/                # Nunjucks layouts (base.njk)
+posts/                  # Blog posts (Markdown)
+index.md                # About / landing page
+agent.md                # Agent-specific page (optional)
+package.json            # Scripts and Eleventy dependency
+</code></pre>
+<h2>Writing Workflow</h2>
+<ol>
+<li>
+<p><strong>Draft the post:</strong> create a new Markdown file in <code>posts/</code> with front matter:</p>
+<pre><code class="language-markdown">---
+layout: base.njk
+title: My Title - DD MMM YYYY
+tags: posts
+---
+</code></pre>
+</li>
+<li>
+<p><strong>Preview locally:</strong></p>
+<pre><code class="language-bash">npm install          # once per clone
+npm run start        # eleventy --serve (hot reload)
+</code></pre>
+<p>Visit <code>http://localhost:8080</code> to preview the site.</p>
+</li>
+<li>
+<p><strong>Build + commit:</strong></p>
+<pre><code class="language-bash">npm run build        # generates docs/
+git status           # confirm docs/ has updated HTML
+git add posts/&lt;slug&gt;.md docs/posts/&lt;slug&gt;/ docs/index.html ...
+git commit -m &quot;post: title&quot;
+git push
+</code></pre>
+</li>
+<li>
+<p><strong>Deploy:</strong> GitHub Pages is already configured to serve from <code>docs/</code> on the <code>main</code> branch. A simple push updates the live site.</p>
+</li>
+</ol>
+<h3>Linking Posts on the Landing Page</h3>
+<p><code>index.md</code> uses the <code>base.njk</code> layout which automatically lists entries tagged <code>posts</code>. As long as your new post includes <code>tags: posts</code>, Eleventy’s collection will surface it on the root page. If you want custom highlights, you can edit <code>index.md</code> and add manual links:</p>
+<pre><code class="language-markdown">- [Agent.sh — Instant LLM Ops On Any Shell](/posts/agent-sh-instant-llm-ops/)
+</code></pre>
+<h2>Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run start</code></td>
+<td>Run Eleventy in watch/serve mode (default localhost:8080).</td>
+</tr>
+<tr>
+<td><code>npm run build</code></td>
+<td>Generate the static site into <code>docs/</code>.</td>
+</tr>
+<tr>
+<td><code>npm install</code></td>
+<td>Install project dependencies.</td>
+</tr>
+</tbody>
+</table>
+<h2>Tech Stack References</h2>
+<ul>
+<li><a href="https://www.11ty.dev/">Eleventy</a> — static site generator</li>
+<li><a href="https://mozilla.github.io/nunjucks/">Nunjucks</a> — templating language used by Eleventy layouts</li>
+<li><a href="https://pages.github.com/">GitHub Pages</a> — hosting for the generated site</li>
+<li><a href="https://nodejs.org/">Node.js</a> — runtime required for Eleventy</li>
+<li><a href="https://www.npmjs.com/">npm</a> — package manager used to install dependencies</li>
+</ul>
+<h2>Misc Notes</h2>
+<ul>
+<li>The <code>docs/</code> folder is generated; keep an eye on diffs when committing (GitHub Pages requires it in the repo).</li>
+<li>Styles live in <code>css/style.css</code>. Update that file to tweak site-wide visuals.</li>
+<li>For public assets (images, etc.), create a directory (e.g., <code>assets/</code>) and copy them via Eleventy passthrough config if needed.</li>
+</ul>
+<p>Happy writing!</p>
