@@ -50,17 +50,30 @@ ai_gen/             # Dev scripts, AI prompts, and helper utilities
 
 ## Git Workflow
 
-Before starting any new work, ensure a clean git state:
+**Never push directly to main.** All work goes through PRs for review.
 
-1. **If on main with no changes**: Create a new feature branch (`git checkout -b <feature-name>`)
-2. **If on main with uncommitted changes**: Stash or commit them, then branch
-3. **If on a feature branch with changes**: Finish the current work first
-   - Commit remaining changes
-   - Push and raise a PR if ready
-   - Switch to main, pull latest, then create new branch for the next task
-4. **Starting fresh work**: Always branch from an up-to-date main
+### Starting new work
 
-Branch naming: use descriptive names like `post/topic-name`, `fix/issue-description`, `feature/what-it-does`
+1. Ensure on main and up-to-date: `git checkout main && git pull`
+2. Create a feature branch: `git checkout -b <feature-name>`
+3. Do the work, commit incrementally
+4. When done: push branch, create PR with `gh pr create`
+5. User reviews the PR and merges
+
+### If already on a feature branch with uncommitted changes
+
+Finish current work first:
+- Commit remaining changes
+- Push and create PR
+- After merge, switch to main, pull, then start new branch
+
+### Branch naming
+
+Use descriptive prefixes: `post/topic-name`, `fix/issue-description`, `feature/what-it-does`
+
+### Keep PRs small
+
+Make focused, reviewable changes. If a task is large, break it into multiple PRs.
 
 ## Conventions
 
