@@ -86,9 +86,17 @@ Make focused, reviewable changes. If a task is large, break it into multiple PRs
 ## Conventions
 
 - Always run `npm run build` after content/style changes
-- Commit both source files and `docs/` together
 - Post titles should include date in format "Title - DD MMM YYYY"
 - Keep the single layout pattern - all pages use base.njk
+
+### Build output must be committed
+
+Running `npm run build` regenerates the entire `docs/` folder. This includes:
+- HTML files for all pages and posts
+- Copied CSS files
+- Navigation regeneration (post order may change)
+
+**Always commit `docs/` changes along with source changes.** GitHub Pages serves from `docs/`, so uncommitted build output means the live site won't match your changes. After building, check `git status` and include all `docs/` modifications in your commit.
 
 ## Development Utilities
 
