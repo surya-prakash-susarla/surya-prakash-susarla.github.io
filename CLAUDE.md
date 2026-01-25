@@ -83,6 +83,31 @@ Use descriptive prefixes: `post/topic-name`, `fix/issue-description`, `feature/w
 
 Make focused, reviewable changes. If a task is large, break it into multiple PRs.
 
+## Backlog
+
+Use GitHub Issues for tracking ideas, tasks, and improvements.
+
+### Commands
+
+| Command | Purpose |
+|---------|---------|
+| `gh issue list` | View open issues |
+| `gh issue create --title "..." --body "..."` | Create new issue |
+| `gh issue view <number>` | View issue details |
+| `gh issue close <number>` | Close an issue |
+
+### Labels
+
+Use labels to categorize issues:
+- `enhancement` - New features or improvements
+- `bug` - Something isn't working
+- `post-idea` - Blog post topics to write about
+- `chore` - Maintenance tasks
+
+### Picking up work
+
+When starting a session, check `gh issue list` for open items. When working on an issue, reference it in the PR body (e.g., "Closes #12").
+
 ## Conventions
 
 - Always run `npm run build` after content/style changes
