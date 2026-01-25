@@ -57,8 +57,16 @@ ai_gen/             # Dev scripts, AI prompts, and helper utilities
 1. Ensure on main and up-to-date: `git checkout main && git pull`
 2. Create a feature branch: `git checkout -b <feature-name>`
 3. Do the work, commit incrementally
-4. When done: push branch, create PR with `gh pr create`
+4. When done:
+   - Push branch: `git push -u origin <branch-name>`
+   - Create PR: `gh pr create --title "type: description" --body "..."`
 5. User reviews the PR and merges
+
+### Tools
+
+- **gh CLI** is required for PR creation (`brew install gh && gh auth login`)
+- Use `gh pr view` to check PR status
+- Use `gh pr merge` if asked to merge from CLI
 
 ### If already on a feature branch with uncommitted changes
 
