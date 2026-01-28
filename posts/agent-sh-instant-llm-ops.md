@@ -2,6 +2,7 @@
 layout: base.njk
 title: Agent.sh — Instant LLM Ops On Any Shell
 tags: posts
+date: 2025-09-20
 ---
 
 # Agent.sh — Instant LLM Ops On Any Shell

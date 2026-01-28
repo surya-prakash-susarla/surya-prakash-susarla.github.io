@@ -41,6 +41,31 @@ body {
   border-right: 1px solid #ccc;
 }
 
+.nav-month {
+  font-size: 0.75em;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.nav-month:first-child {
+  margin-top: 0;
+}
+
+.nav-post {
+  display: block;
+  padding: 0.25rem 0;
+  padding-left: 0.5rem;
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-post:hover {
+  color: #000;
+}
+
 .main {
   grid-area: main;
   overflow-y: auto;
