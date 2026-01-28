@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surya's Log</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Surya Susarla</h1>
+      <p class="subtitle">Dev log - <a href="/">About</a></p>
+      <div class="separator"></div>
+    </header>
+    <nav class="nav"><div class="nav-month">Jan 2026</div><a class="nav-post" href="/posts/llm-assisted-dev/">Building This Blog With LLM Agents - 27 Jan 2026</a><div class="nav-month">Sep 2025</div><a class="nav-post" href="/posts/revisiting-bloom-filters/">Revisiting Bloom Filters - 21 Sep 2025</a><a class="nav-post" href="/posts/agent-sh-instant-llm-ops/">Agent.sh — Instant LLM Ops On Any Shell</a><a class="nav-post" href="/posts/setting-up-this-blog/">Setting up this page - 20 Sep 2025</a></nav>
+    <main class="main">
+      <h1>Building This Blog With LLM Agents</h1>
+<p>This blog has been built and maintained almost entirely through conversations with LLM agents. I wanted to document how that's been going—what works, what doesn't, and some observations along the way.</p>
+<h2>The Setup</h2>
+<p>The <a href="/posts/setting-up-this-blog/">first post</a> covers the initial detour: I wanted a simple static site but refused to give CLI tools access to my personal Mac. That led me down a rabbit hole of Hyper-V, GPU passthrough, and eventually just running Gemini CLI in an Ubuntu VM. The site itself—Eleventy, Nunjucks templates, plain CSS—was scaffolded through that conversation.</p>
+<h2>Recent Work: Claude Code</h2>
+<p>More recently I've been using <a href="https://claude.ai/code">Claude Code</a>, Anthropic's CLI agent. The workflow is different from web-based chat. It has direct access to the filesystem, can read and edit files, run commands, and create git branches and PRs. Here's what we built in a single session:</p>
+<h3>Feature 1: Month-grouped navigation</h3>
+<p>The nav sidebar was a flat list of posts. I wanted Medium-style groupings—subtle month headers with posts nested underneath.</p>
+<p>The agent:</p>
+<ol>
+<li>Explored the codebase (template, CSS, Eleventy config)</li>
+<li>Proposed adding a <code>date</code> field to frontmatter instead of parsing dates from titles</li>
+<li>Asked clarifying questions (what about posts without dates? newest-first or oldest-first?)</li>
+<li>Implemented the changes across 4 files</li>
+<li>Built, committed, pushed, and created a PR</li>
+</ol>
+<p>The whole thing took one conversation. I reviewed the PR, merged it, and the agent cleaned up the branch.</p>
+<h3>Feature 2: Post footer with publication date</h3>
+<p>I wanted a subtle footer showing when each post was published—a partial-width divider with the date centered below.</p>
+<p>Same flow: exploration, implementation, PR. But this one had a couple of interesting moments.</p>
+<p><strong>The timezone bug.</strong> The first build showed &quot;20 Sep 2025&quot; for a post dated September 21st. JavaScript's <code>getDate()</code> was interpreting the UTC date in local time, shifting it back a day. The agent caught this in testing and fixed it by switching to <code>getUTCDate()</code>.</p>
+<p><strong>The script location debate.</strong> The agent created a helper script to scaffold new posts with auto-filled dates. It put it in <code>ai_gen/</code>—a directory I'd designated for throwaway scripts and gitignored. I asked: &quot;wait, if I depend on this but it's not in git, a clone would break.&quot; We moved it to <code>scripts/</code> instead.</p>
+<p>Both of these were things I would've caught in code review, but the agent surfaced them during implementation. The conversation felt collaborative rather than just &quot;generate code, hope it works.&quot;</p>
+<h2>The Instructions File</h2>
+<p>Claude Code reads a <code>CLAUDE.md</code> file from the repo root—think of it as onboarding docs for the agent. Mine covers:</p>
+<ul>
+<li><strong>Project context</strong>: Tech stack, directory structure, key files</li>
+<li><strong>Git workflow</strong>: Never push to main, always use PRs, branch naming conventions</li>
+<li><strong>Commands</strong>: How to build, run dev server, create issues</li>
+<li><strong>Conventions</strong>: Build output must be committed, post title format, single layout pattern</li>
+<li><strong>Backlog</strong>: Use GitHub Issues, check <code>gh issue list</code> at session start</li>
+</ul>
+<p>The file is about 130 lines. Not exhaustive, but enough to establish the ground rules.</p>
+<h3>How It's Holding Up</h3>
+<p><strong>What's working:</strong></p>
+<ul>
+<li>The PR workflow is respected consistently. Every change goes through a branch and PR—no direct pushes to main.</li>
+<li>The agent runs <code>npm run build</code> after changes and commits the <code>docs/</code> output without being reminded.</li>
+<li>It checks <code>gh issue list</code> when I mention the backlog and uses <code>Closes #N</code> in PR descriptions.</li>
+<li>Branch naming follows the conventions (<code>feature/</code>, <code>post/</code>, <code>fix/</code>).</li>
+</ul>
+<p><strong>What needed reinforcement:</strong></p>
+<ul>
+<li>The <code>ai_gen/</code> section said it was for &quot;throwaway scripts&quot;—but that was ambiguous. When the agent put a useful script there, I had to clarify that important tooling should go somewhere tracked. The instructions were technically followed but the intent was missed.</li>
+<li>The file mentioned committing build output, but didn't explicitly say &quot;check git status after building.&quot; Minor, but I've seen the agent occasionally miss untracked files.</li>
+</ul>
+<p><strong>What I might add:</strong></p>
+<ul>
+<li>Explicit note about checking <code>.gitignore</code> before creating new directories</li>
+<li>A section on testing changes locally before committing</li>
+<li>Maybe examples of good vs bad commit messages</li>
+</ul>
+<p>The instructions file isn't magic—it's context. The agent still makes judgment calls, and sometimes those need correction. But it dramatically reduces the &quot;wait, that's not how we do things here&quot; moments. Starting a session cold, the agent already knows this is an Eleventy site, that PRs are required, and that the nav auto-generates from the posts collection. That baseline matters.</p>
+<h2>What Works Well</h2>
+<p><strong>Exploration before implementation.</strong> The agent reads files, understands existing patterns, and proposes changes that fit the codebase style. It's not just dumping generic code.</p>
+<p><strong>The PR workflow.</strong> Having the agent create branches and PRs means I review changes the same way I would from a human contributor. The diff is right there. I can request changes or merge.</p>
+<p><strong>Catching its own mistakes.</strong> The timezone bug wasn't something I pointed out—the agent tested the build, noticed the date was wrong, and fixed it before I saw it.</p>
+<p><strong>Asking good questions.</strong> Instead of assuming, it asked about the post without a date and about sort order. Small things, but they matter.</p>
+<h2>What Requires Attention</h2>
+<p><strong>Gitignore awareness.</strong> The agent didn't check whether <code>ai_gen/</code> was tracked before putting important code there. I had to catch that.</p>
+<p><strong>Scope creep potential.</strong> Agents are eager to help. If you're not specific, they might add features you didn't ask for. Being clear about what you want (and don't want) matters.</p>
+<p><strong>Still need to review.</strong> The code is generally good, but I wouldn't merge without looking. It's a tool, not a replacement for judgment.</p>
+<h2>Observations</h2>
+<p>The dynamic that works best: I describe what I want at a high level, the agent proposes an approach and asks questions, I approve or redirect, it implements, I review the PR. It's not that different from working with a junior developer who happens to type very fast and never gets tired.</p>
+<p>The agents are getting better at knowing when to ask versus when to proceed. Early on, I'd get implementations that missed the point. Now there's more back-and-forth upfront, which saves time overall.</p>
+<p>I'm curious how this scales. A blog is simple—clear file structure, fast feedback loops, low stakes. Larger codebases with more context, more conventions, more ways to break things? That's the real test.</p>
+<p>For now, though, it's been useful. This post itself was drafted by the same agent that built the features it's describing. Meta, but fitting.</p>
+<footer class="post-footer">
+        <div class="post-footer-divider"></div>
+        <div class="post-footer-date">27 Jan 2026</div>
+      </footer></main>
+  </div>
+</body>
+</html>
