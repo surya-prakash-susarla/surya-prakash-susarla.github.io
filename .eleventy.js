@@ -8,11 +8,19 @@ module.exports = function(eleventyConfig) {
     });
   });
 
-  // Filter to format date as "MMM YYYY"
+  // Filter to format date as "MMM YYYY" (using UTC to avoid timezone shifts)
   eleventyConfig.addFilter("monthYear", function(date) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return months[date.getMonth()] + " " + date.getFullYear();
+    return months[date.getUTCMonth()] + " " + date.getUTCFullYear();
+  });
+
+  // Filter to format date as "DD MMM YYYY" (using UTC to avoid timezone shifts)
+  eleventyConfig.addFilter("formatDate", function(date) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = date.getUTCDate();
+    return day + " " + months[date.getUTCMonth()] + " " + date.getUTCFullYear();
   });
 
   return {

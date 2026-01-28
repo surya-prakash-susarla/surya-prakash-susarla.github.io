@@ -26,6 +26,12 @@
     </nav>
     <main class="main">
       {{ content | safe }}
+      {%- if tags and tags.includes("posts") -%}
+      <footer class="post-footer">
+        <div class="post-footer-divider"></div>
+        <div class="post-footer-date">{{ date | formatDate }}</div>
+      </footer>
+      {%- endif -%}
     </main>
   </div>
 </body>
