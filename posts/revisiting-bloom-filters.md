@@ -2,6 +2,7 @@
 layout: base.njk
 title: Revisiting Bloom Filters - 21 Sep 2025
 tags: posts
+date: 2025-09-21
 ---
 
 # Revisiting Bloom Filters

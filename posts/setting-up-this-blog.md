@@ -2,6 +2,7 @@
 layout: base.njk
 title: Setting up this page - 20 Sep 2025
 tags: posts
+date: 2025-09-20
 ---
 
 # Why?
