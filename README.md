@@ -1,6 +1,8 @@
 # Personal Site (surya-prakash-susarla.github.io)
 
-This repo powers my blog and landing page at [surya-prakash-susarla.github.io](https://surya-prakash-susarla.github.io). It is an [Eleventy](https://www.11ty.dev/) project that compiles Markdown posts into a static site inside the `docs/` directory (GitHub Pages serves from `docs/` on the main branch).
+This repo powers my blog and landing page, with [suryasusarla.com](https://suryasusarla.com) as the canonical domain. The GitHub Pages URL ([surya-prakash-susarla.github.io](https://surya-prakash-susarla.github.io)) redirects all visitors to `suryasusarla.com` via a client-side JS redirect in the base layout.
+
+It is an [Eleventy](https://www.11ty.dev/) project that compiles Markdown posts into a static site inside the `docs/` directory (GitHub Pages serves from `docs/` on the main branch).
 
 ## Project Layout
 
